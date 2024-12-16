@@ -8,8 +8,8 @@ def main():
     print(f"{words} words in here")
     print("======================")
     print("individual character count:")
-    for char, count in chars.items():
-        print(f"'{char}':    {count}")
+    for char in chars:
+        print(f"'{char[0]}':    {char[1]}")
 
 
 def open_and_read(path_to_file):
@@ -27,12 +27,18 @@ def count_words(text):
 def count_chars(text):
     char_dict = {}
     for char in text.lower():
-        if char not in char_dict:
+        if not char.isalpha():
+            continue
+        elif char not in char_dict:
             char_dict.update({char: 1})
         else:
             char_dict[char] += 1
-
-    return char_dict
+    char_dict_items = char_dict.items()
+    char_list_of_tuples = list(char_dict_items)
+    char_list_of_tuples.sort(
+        reverse=True, key=lambda x: x[1]
+    )
+    return char_list_of_tuples
 
 
 main()
